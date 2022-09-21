@@ -112,6 +112,8 @@ class BBoxTestMixin:
         # apply bbox post-processing to each image individually
         det_bboxes = []
         det_labels = []
+        self.bbox_head.boxess.clear()
+        self.bbox_head.scores.clear()
         for i in range(len(proposals)):
             if rois[i].shape[0] == 0:
                 # There is no proposal in the single image

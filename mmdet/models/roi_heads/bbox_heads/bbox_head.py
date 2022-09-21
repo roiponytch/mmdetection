@@ -58,6 +58,9 @@ class BBoxHead(BaseModule):
         self.loss_cls = build_loss(loss_cls)
         self.loss_bbox = build_loss(loss_bbox)
 
+        self.boxess = []
+        self.scores = []
+
         in_channels = self.in_channels
         if self.with_avg_pool:
             self.avg_pool = nn.AvgPool2d(self.roi_feat_size)
@@ -368,6 +371,8 @@ class BBoxHead(BaseModule):
             bboxes = (bboxes.view(bboxes.size(0), -1, 4) / scale_factor).view(
                 bboxes.size()[0], -1)
 
+        self.boxess.append(bboxes)
+        self.scores.append(scores)
         if cfg is None:
             return bboxes, scores
         else:
